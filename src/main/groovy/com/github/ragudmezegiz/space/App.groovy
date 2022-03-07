@@ -40,6 +40,10 @@ class App {
     App(String[] args) {
         def cli = new CliBuilder(usage:'space-tools [options] <command> {args}');
         options = cli.parseFromSpec(Options, args)
+        if (options.help()) {
+            cli.usage()
+            // TODO Add help text for commands
+        }
     }
 
     /**
@@ -49,7 +53,7 @@ class App {
      */
     int execute() {
         if (options.help()) {
-            options.usage()
+            // Help has been displayed already - exit
             return 0
         }
 
