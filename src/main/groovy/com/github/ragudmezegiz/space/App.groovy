@@ -21,17 +21,35 @@ import groovy.cli.commons.CliBuilder
 /** Main application entry point. */
 class App {
 
+    /**
+     * Program entry point.
+     *
+     * @param args command-line arguments
+     */
+    static void main(String[] args) {
+        def app = new App(args)
+        def result = app.execute()
+        if (result) {
+            // TODO Print error message to console or log
+        }
+    }
+
     /** Command-line option specification. */
     interface Options {
+
         @Option(shortName='h', longName='help', description='print this text')
         boolean help()
-        
+
         @Unparsed
         List remaining()
+
     }
 
     /** Command-line options. */
     def options
+
+    /** Error message. */
+    String errorMsg
 
     /**
      * Constructor.
@@ -39,7 +57,7 @@ class App {
      * @param args command-line arguments
      */
     App(String[] args) {
-        def cli = new CliBuilder(usage:'space-tools [options] <command> {args}');
+        def cli = new CliBuilder(usage:'space-tools [options] <command> {args}')
         options = cli.parseFromSpec(Options, args)
         if (options.help()) {
             cli.usage()
@@ -58,25 +76,14 @@ class App {
             return 0
         }
 
-        if (options.remaining().isEmpty()) {
+        if (options.remaining().empty) {
             // Missing command
             return 1
         }
 
         // TODO implement
+        /* groovylint-disable-next-line DuplicateNumberLiteral */
         return 0
     }
 
-    /**
-     * Program entry point.
-     *
-     * @param args command-line arguments
-     */
-    static void main(String[] args) {
-        def app = new App(args)
-        def result = app.execute()
-        if (result) {
-            // TODO Print error message to console or log
-        }
-    }
 }
