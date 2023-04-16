@@ -18,6 +18,7 @@ import groovy.cli.Option
 import groovy.cli.Unparsed
 import groovy.cli.commons.CliBuilder
 
+/** Main application entry point. */
 class App {
 
     /** Command-line option specification. */
