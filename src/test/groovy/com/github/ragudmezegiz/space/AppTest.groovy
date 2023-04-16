@@ -16,8 +16,12 @@ package com.github.ragudmezegiz.space
 
 import spock.lang.Specification
 
+/* groovylint-disable MethodName, MethodReturnTypeRequired */
+
+/** Test of class App. */
 class AppTest extends Specification {
-    def "no args returns non-zero"() {
+
+    def "no args fails execution"() {
         setup:
         def app = new App((String[])[])
 
@@ -25,6 +29,8 @@ class AppTest extends Specification {
         def result = app.execute()
 
         then:
-        result != 0
+        !result
+        app.errorMsg == 'Command required'
     }
+
 }

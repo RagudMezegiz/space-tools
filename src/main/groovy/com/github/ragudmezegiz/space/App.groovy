@@ -28,9 +28,8 @@ class App {
      */
     static void main(String[] args) {
         def app = new App(args)
-        def result = app.execute()
-        if (result) {
-            // TODO Print error message to console or log
+        if (!app.execute()) {
+            System.console.println(app.errorMsg)
         }
     }
 
@@ -68,22 +67,22 @@ class App {
     /**
      * Execute as specified on the command line.
      *
-     * @return exit code; 0 on success, non-zero on failure
+     * @return true on success, false on failure
      */
-    int execute() {
+    boolean execute() {
         if (options.help()) {
             // Help has been displayed already - exit
-            return 0
+            return true
         }
 
         if (options.remaining().empty) {
             // Missing command
-            return 1
+            errorMsg = 'Command required'
+            return false
         }
 
         // TODO implement
-        /* groovylint-disable-next-line DuplicateNumberLiteral */
-        return 0
+        return true
     }
 
 }
