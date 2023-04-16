@@ -20,7 +20,7 @@ plugins {
     id 'application'
 
     // Dependency version checking
-    id "com.github.ben-manes.versions" version "0.42.0"
+    id "com.github.ben-manes.versions" version "0.46.0"
 }
 
 repositories {
@@ -30,8 +30,8 @@ repositories {
 
 dependencies {
     // Use the latest Groovy version for building this library
-    implementation 'org.codehaus.groovy:groovy-all:3.0.10'
-    implementation 'org.codehaus.groovy:groovy-cli-commons:3.0.10'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.17'
+    implementation 'org.codehaus.groovy:groovy-cli-commons:3.0.17'
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
