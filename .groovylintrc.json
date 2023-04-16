@@ -7,6 +7,9 @@
         "FieldTypeRequired": {
             "enabled": false
         },
+        "JUnitPublicNonTestMethod": {
+            "enabled": false
+        },
         "NoDef": {
             "enabled": false
         },
