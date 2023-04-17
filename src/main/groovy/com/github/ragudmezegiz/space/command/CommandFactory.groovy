@@ -13,10 +13,14 @@
 // limitations under the License.
 package com.github.ragudmezegiz.space.command
 
+import java.util.function.Supplier
+
 /** Factory for making command instances. */
 class CommandFactory {
 
-    static Map<String, Command> commands = [:]
+    static Map<String, Supplier<Command>> commands = [
+        prefs: (Supplier)PrefsCommand::new
+        ]
 
     /**
      * Make a command.
@@ -24,7 +28,7 @@ class CommandFactory {
      */
     static Command makeCommand(String cmdName) {
         if (commands.containsKey(cmdName)) {
-            return commands.get(cmdName)
+            return commands.get(cmdName).get()
         }
         throw new IllegalArgumentException("${cmdName} is not a valid command")
     }

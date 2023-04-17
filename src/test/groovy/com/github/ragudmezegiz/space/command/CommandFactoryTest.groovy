@@ -29,4 +29,12 @@ class CommandFactoryTest extends Specification {
         e.message == 'nonexistentcommand is not a valid command'
     }
 
+    def "prefs command available"() {
+        when:
+        def result = CommandFactory.makeCommand('prefs')
+
+        then:
+        result instanceof PrefsCommand
+    }
+
 }

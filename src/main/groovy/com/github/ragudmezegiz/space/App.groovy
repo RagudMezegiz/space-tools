@@ -14,6 +14,9 @@
 // limitations under the License.
 package com.github.ragudmezegiz.space
 
+import com.github.ragudmezegiz.space.command.Command
+import com.github.ragudmezegiz.space.command.CommandFactory
+
 import groovy.cli.Option
 import groovy.cli.Unparsed
 import groovy.cli.commons.CliBuilder
@@ -28,9 +31,23 @@ class App {
      */
     static void main(String[] args) {
         def app = new App(args)
-        if (!app.execute()) {
-            System.console.println(app.errorMsg)
+        try {
+            if (!app.execute()) {
+                System.console.println(app.errorMsg)
+            }
+        } catch (IllegalArgumentException ex) {
+            System.console.println(ex.message)
         }
+    }
+
+    /**
+     * Return the application data folder.
+     *
+     * @return data folder
+     */
+    static String folder() {
+        return System.getProperty('user.home') +
+            System.getProperty('file.separator') + '.space-tools'
     }
 
     /** Command-line option specification. */
@@ -81,8 +98,9 @@ class App {
             return false
         }
 
-        // TODO implement
-        return true
+        def cmd = CommandFactory.makeCommand(options.remaining().remove(0))
+        cmd.arguments(options.remaining())
+        return cmd.execute()
     }
 
 }

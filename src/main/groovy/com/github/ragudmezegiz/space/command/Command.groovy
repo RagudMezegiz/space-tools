@@ -17,6 +17,12 @@ package com.github.ragudmezegiz.space.command
 interface Command {
 
     /**
+     * Set command arguments.
+     * @param args arguments
+     */
+    void arguments(List args)
+
+    /**
      * Execute the command.
      * @return true on success, false on failure
      */
