@@ -76,6 +76,8 @@ class PrefsCommand implements Command {
         return '''\
             |prefs clear
             |  clear all preferences
+            |prefs list
+            |  list all preferences
             |prefs { <property>=<value> }
             |  set properties to specified values
             |  preferences are used by other commands
