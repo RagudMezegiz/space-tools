@@ -21,8 +21,15 @@ import groovy.cli.Option
 import groovy.cli.Unparsed
 import groovy.cli.commons.CliBuilder
 
+import java.util.prefs.Preferences
+
+/* groovylint-disable DuplicateNumberLiteral */
+
 /** Main application entry point. */
 class App {
+
+    /** Error message. */
+    static String errorMsg
 
     /**
      * Program entry point.
@@ -33,7 +40,7 @@ class App {
         def app = new App(args)
         try {
             if (!app.execute()) {
-                System.console.println(app.errorMsg)
+                System.console.println(errorMsg)
             }
         } catch (IllegalArgumentException ex) {
             System.console.println(ex.message)
@@ -50,6 +57,15 @@ class App {
             System.getProperty('file.separator') + '.space-tools'
     }
 
+    /**
+     * Return the application preferences.
+     *
+     * @return preferences
+     */
+    static Preferences preferences() {
+        return Preferences.userNodeForPackage(App)
+    }
+
     /** Command-line option specification. */
     interface Options {
 
@@ -64,9 +80,6 @@ class App {
     /** Command-line options. */
     def options
 
-    /** Error message. */
-    String errorMsg
-
     /**
      * Constructor.
      *
@@ -77,6 +90,10 @@ class App {
         options = cli.parseFromSpec(Options, args)
         if (options.help()) {
             cli.usage()
+            System.console().println('''\
+                |help <command>
+                |  print help text for command
+                |'''.stripMargin())
             // TODO Add help text for commands
         }
     }
@@ -94,12 +111,23 @@ class App {
 
         if (options.remaining().empty) {
             // Missing command
-            errorMsg = 'Command required'
+            App.setErrorMsg('Command required')
             return false
+        }
+
+        boolean doHelp = false
+        if (options.remaining().get(0) == 'help') {
+            doHelp = true
         }
 
         def cmd = CommandFactory.makeCommand(options.remaining().remove(0))
         cmd.arguments(options.remaining())
+
+        if (doHelp) {
+            System.console().println(cmd.help())
+            return true
+        }
+
         return cmd.execute()
     }
 

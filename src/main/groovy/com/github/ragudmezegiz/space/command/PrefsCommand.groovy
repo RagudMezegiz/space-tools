@@ -28,7 +28,7 @@ class PrefsCommand implements Command {
     private boolean doList = false
 
     PrefsCommand() {
-        userPrefs = Preferences.userNodeForPackage(App)
+        userPrefs = App.preferences()
     }
 
     @PackageScope

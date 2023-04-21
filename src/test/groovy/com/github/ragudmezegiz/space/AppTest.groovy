@@ -30,7 +30,7 @@ class AppTest extends Specification {
 
         then:
         !result
-        app.errorMsg == 'Command required'
+        App.errorMsg == 'Command required'
     }
 
 }
