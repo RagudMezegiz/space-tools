@@ -37,4 +37,12 @@ class CommandFactoryTest extends Specification {
         result instanceof PrefsCommand
     }
 
+    def "catalog command available"() {
+        when:
+        def result = CommandFactory.makeCommand('catalog')
+
+        then:
+        result instanceof CatalogCommand
+    }
+
 }

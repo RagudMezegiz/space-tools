@@ -40,10 +40,10 @@ class App {
         def app = new App(args)
         try {
             if (!app.execute()) {
-                System.console.println(errorMsg)
+                System.console().println(errorMsg)
             }
         } catch (IllegalArgumentException ex) {
-            System.console.println(ex.message)
+            System.console().println(ex.message)
         }
     }
 

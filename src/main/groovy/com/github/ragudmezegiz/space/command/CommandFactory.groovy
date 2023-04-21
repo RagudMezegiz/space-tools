@@ -19,7 +19,8 @@ import java.util.function.Supplier
 class CommandFactory {
 
     static Map<String, Supplier<Command>> commands = [
-        prefs: (Supplier)PrefsCommand::new
+        prefs: (Supplier)PrefsCommand::new,
+        catalog: (Supplier)CatalogCommand::new,
         ]
 
     /**
