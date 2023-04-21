@@ -13,27 +13,25 @@
 // limitations under the License.
 package com.github.ragudmezegiz.space.command
 
-import com.github.ragudmezegiz.space.App
 import groovy.transform.PackageScope
 import java.util.prefs.Preferences
 
 /* groovylint-disable DuplicateNumberLiteral */
 
 /** Preferences command. */
-class PrefsCommand implements Command {
+class PrefsCommand extends AbstractCommand {
 
-    private final Preferences userPrefs
     private final Map values = [:]
     private boolean doClear = false
     private boolean doList = false
 
     PrefsCommand() {
-        userPrefs = App.preferences()
+        super()
     }
 
     @PackageScope
     PrefsCommand(Preferences prefs) {
-        userPrefs = prefs
+        super(prefs)
     }
 
     void arguments(List args) {
