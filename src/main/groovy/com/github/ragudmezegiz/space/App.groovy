@@ -94,7 +94,9 @@ class App {
                 |help <command>
                 |  print help text for command
                 |'''.stripMargin())
-            // TODO Add help text for commands
+            CommandFactory.commandList().each { c ->
+                System.console().println(c.help())
+            }
         }
     }
 

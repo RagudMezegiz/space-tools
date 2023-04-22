@@ -34,4 +34,12 @@ class CommandFactory {
         throw new IllegalArgumentException("${cmdName} is not a valid command")
     }
 
+    /**
+     * Return a list of commands.
+     * @return command list
+     */
+    static List commandList() {
+        return commands.values()*.get()
+    }
+
 }
