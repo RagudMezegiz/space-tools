@@ -44,7 +44,8 @@ class CatalogCommandTest extends Specification {
     def "missing identity preference fails"() {
         given:
         Preferences prefs = Mock(Preferences)
-        CatalogCommand cmd = new CatalogCommand(prefs)
+        RESTClient client = Mock(RESTClient)
+        CatalogCommand cmd = new CatalogCommand(prefs, client)
         cmd.arguments(['update'])
 
         when:
@@ -62,7 +63,8 @@ class CatalogCommandTest extends Specification {
     def "missing password preference fails"() {
         given:
         Preferences prefs = Mock(Preferences)
-        CatalogCommand cmd = new CatalogCommand(prefs)
+        RESTClient client = Mock(RESTClient)
+        CatalogCommand cmd = new CatalogCommand(prefs, client)
         cmd.arguments(['update'])
 
         when:

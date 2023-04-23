@@ -54,10 +54,6 @@ https://www.space-track.org/basicspacedata/query/class/gp\
         client = new RESTClient(SPACETRACK_URL)
     }
 
-    CatalogCommand(Preferences prefs) {
-        this(prefs, new RESTClient(SPACETRACK_URL))
-    }
-
     @PackageScope
     CatalogCommand(Preferences prefs, RESTClient rc) {
         super(prefs)
