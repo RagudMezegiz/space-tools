@@ -4,10 +4,16 @@
         "CompileStatic": {
             "enabled": false
         },
+        "DirectConnectionManagement": {
+            "enabled": false
+        },
         "FieldTypeRequired": {
             "enabled": false
         },
         "JUnitPublicNonTestMethod": {
+            "enabled": false
+        },
+        "JavaIoPackageAccess": {
             "enabled": false
         },
         "NoDef": {
