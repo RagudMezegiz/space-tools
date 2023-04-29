@@ -14,6 +14,7 @@
 // limitations under the License.
 package com.github.ragudmezegiz.space
 
+import com.github.ragudmezegiz.space.catalog.Catalog
 import com.github.ragudmezegiz.space.command.Command
 import com.github.ragudmezegiz.space.command.CommandFactory
 
@@ -27,6 +28,8 @@ import java.util.prefs.Preferences
 
 /** Main application entry point. */
 class App {
+
+    private static final String FILE_SEP = System.getProperty('file.separator')
 
     /** Error message. */
     static String errorMsg
@@ -48,13 +51,13 @@ class App {
     }
 
     /**
-     * Return the application data folder.
+     * Return a new catalog instance.
      *
-     * @return data folder
+     * @return catalog
      */
-    static String folder() {
-        return System.getProperty('user.home') +
-            System.getProperty('file.separator') + '.space-tools'
+    static Catalog catalog() {
+        new File(folder()).mkdir()
+        return new Catalog(database())
     }
 
     /**
@@ -64,6 +67,57 @@ class App {
      */
     static Preferences preferences() {
         return Preferences.userNodeForPackage(App)
+    }
+
+    /**
+     * Execute as specified on the command line.
+     *
+     * @return true on success, false on failure
+     */
+    boolean execute() {
+        if (options.help()) {
+            // Help has been displayed already - exit
+            return true
+        }
+
+        if (options.remaining().empty) {
+            // Missing command
+            App.setErrorMsg('Command required')
+            return false
+        }
+
+        boolean doHelp = false
+        if (options.remaining().get(0) == 'help') {
+            doHelp = true
+        }
+
+        def cmd = CommandFactory.makeCommand(options.remaining().remove(0))
+        cmd.arguments(options.remaining())
+
+        if (doHelp) {
+            System.console().println(cmd.help())
+            return true
+        }
+
+        return cmd.execute()
+    }
+
+    /**
+     * Return the database file name.
+     *
+     * @return database file name
+     */
+    private static String database() {
+        return folder() + FILE_SEP + 'catalog.db'
+    }
+
+    /**
+     * Return the application data folder.
+     *
+     * @return data folder
+     */
+    private static String folder() {
+        return System.getProperty('user.home') + FILE_SEP + '.space-tools'
     }
 
     /** Command-line option specification. */
@@ -98,39 +152,6 @@ class App {
                 System.console().println(c.help())
             }
         }
-    }
-
-    /**
-     * Execute as specified on the command line.
-     *
-     * @return true on success, false on failure
-     */
-    boolean execute() {
-        if (options.help()) {
-            // Help has been displayed already - exit
-            return true
-        }
-
-        if (options.remaining().empty) {
-            // Missing command
-            App.setErrorMsg('Command required')
-            return false
-        }
-
-        boolean doHelp = false
-        if (options.remaining().get(0) == 'help') {
-            doHelp = true
-        }
-
-        def cmd = CommandFactory.makeCommand(options.remaining().remove(0))
-        cmd.arguments(options.remaining())
-
-        if (doHelp) {
-            System.console().println(cmd.help())
-            return true
-        }
-
-        return cmd.execute()
     }
 
 }

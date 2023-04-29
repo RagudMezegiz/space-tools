@@ -33,7 +33,11 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-all:3.0.17'
     implementation 'org.codehaus.groovy:groovy-cli-commons:3.0.17'
 
+    // wslite for downloading from other web services
     implementation 'com.github.groovy-wslite:groovy-wslite:1.1.3'
+
+    // SQLite for database work
+    implementation 'org.xerial:sqlite-jdbc:3.41.2.1'
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'

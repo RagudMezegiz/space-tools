@@ -14,6 +14,7 @@
 package com.github.ragudmezegiz.space.command
 
 import com.github.ragudmezegiz.space.App
+import com.github.ragudmezegiz.space.catalog.Catalog
 import groovy.json.JsonLexer
 import groovy.json.JsonToken
 import groovy.json.JsonTokenType
@@ -49,15 +50,19 @@ https://www.space-track.org/basicspacedata/query/class/gp\
 
     private final RESTClient client
 
+    private final Catalog catalog
+
     CatalogCommand() {
         super()
         client = new RESTClient(SPACETRACK_URL)
+        catalog = App.catalog()
     }
 
     @PackageScope
-    CatalogCommand(Preferences prefs, RESTClient rc) {
+    CatalogCommand(Preferences prefs, RESTClient rc, Catalog cat) {
         super(prefs)
         client = rc
+        catalog = cat
     }
 
     void arguments(List args) {
@@ -136,8 +141,7 @@ https://www.space-track.org/basicspacedata/query/class/gp\
                     break
                 case JsonTokenType.CLOSE_CURLY:
                     // Finished with this element
-                    // TODO Insert element into catalog
-                    System.console().println(element.TLE_LINE0)
+                    catalog.updateElement(element)
                     return true
                 case JsonTokenType.STRING:
                     // Field name

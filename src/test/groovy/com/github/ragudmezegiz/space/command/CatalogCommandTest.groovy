@@ -14,6 +14,7 @@
 package com.github.ragudmezegiz.space.command
 
 import com.github.ragudmezegiz.space.App
+import com.github.ragudmezegiz.space.catalog.Catalog
 import groovy.json.JsonSlurper
 import java.util.prefs.Preferences
 import spock.lang.Ignore
@@ -45,7 +46,8 @@ class CatalogCommandTest extends Specification {
         given:
         Preferences prefs = Mock(Preferences)
         RESTClient client = Mock(RESTClient)
-        CatalogCommand cmd = new CatalogCommand(prefs, client)
+        Catalog cat = Mock(Catalog)
+        CatalogCommand cmd = new CatalogCommand(prefs, client, cat)
         cmd.arguments(['update'])
 
         when:
@@ -64,7 +66,8 @@ class CatalogCommandTest extends Specification {
         given:
         Preferences prefs = Mock(Preferences)
         RESTClient client = Mock(RESTClient)
-        CatalogCommand cmd = new CatalogCommand(prefs, client)
+        Catalog cat = Mock(Catalog)
+        CatalogCommand cmd = new CatalogCommand(prefs, client, cat)
         cmd.arguments(['update'])
 
         when:
@@ -103,7 +106,8 @@ class CatalogCommandTest extends Specification {
         }
         Preferences prefs = Mock(Preferences)
         RESTClient client = Mock(RESTClient)
-        CatalogCommand cmd = new CatalogCommand(prefs, client)
+        Catalog cat = Mock(Catalog)
+        CatalogCommand cmd = new CatalogCommand(prefs, client, cat)
         cmd.arguments(['update'])
 
         when:
@@ -117,6 +121,9 @@ class CatalogCommandTest extends Specification {
         }
         with(client) {
             1 * post(_, _) >> resp
+        }
+        with(cat) {
+            2 * updateElement(_)
         }
     }
 
@@ -137,7 +144,8 @@ class CatalogCommandTest extends Specification {
         Response resp = new Response(hreq, hres)
         Preferences prefs = Mock(Preferences)
         RESTClient client = Mock(RESTClient)
-        CatalogCommand cmd = new CatalogCommand(prefs, client)
+        Catalog cat = Mock(Catalog)
+        CatalogCommand cmd = new CatalogCommand(prefs, client, cat)
         cmd.arguments(['update'])
 
         when:
